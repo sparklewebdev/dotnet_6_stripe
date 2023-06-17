@@ -1,0 +1,79 @@
+﻿@model WebApp_Models.ViewModels.ProductViewModel
+<form method="post" asp-action="CreateUpdate" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Products.Id" />
+    <input type="hidden" asp-for="Products.ImageUrl" />
+    <div class="border p-3 mt-4">
+        <div class="row pb-3">
+            <h2 class="text-primary">@((Model.Products == null ||Model.Products.Id == 0)?"Create":"Update") Product</h2>
+            <hr />
+        </div>
+        <div asp-validation-summary=All></div>
+        <div class="row pb-3">
+            <label asp-for="Products.Name"></label>
+            <input asp-for="Products.Name" class="form-control" />
+            <span asp-validation-for="Products.Name" class="text-danger"></span>
+        </div>
+        <div class="row pb-3">
+            <label asp-for="Products.Description"></label>
+            <textarea asp-for="Products.Description" class="form-control"></textarea>
+            <span asp-validation-for="Products.Description" class="text-danger"></span>
+        </div>
+        <div class="row pb-3">
+            <label asp-for="Products.Price"></label>
+            <input asp-for="Products.Price" class="form-control" />
+            <span asp-validation-for="Products.Price" class="text-danger"></span>
+        </div>
+        <div class="row pb-3">
+            <label asp-for="Products.ImageUrl"></label>
+            <input type="file" id="ImageFile" name="file" class="form-select" />
+        </div>
+        <div class="row pb-3">
+            <label asp-for="Products.CategoryId"></label>
+            <select asp-for="Products.CategoryId" asp-items="@Model.Categories" class="form-control">
+                <option selected disabled>-- Select Category --</option>
+            </select>
+            <span asp-validation-for="Products.CategoryId" class="text-danger"></span>
+        </div>
+        @if (Model.Products == null || Model.Products.Id == 0)
+        {
+            <button class="btn btn-primary" onclick="return ValidateEmpty()" type="submit">Create</button>
+        }
+        else
+        {
+            <button class="btn btn-primary" type="submit">Update</button>
+        }
+
+    </div>
+    <a asp-action="Index" asp-controller="Product">Back To List</a>
+</form>
+
+@section scripts{
+    @{
+    <partial name="_ValidationScriptsPartial" />
+    }
+    <script>
+
+    tinymce.init({
+      selector: 'textarea',
+      plugins: 'a11ychecker advcode casechange export formatpainter image editimage linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tableofcontents tinycomments tinymcespellchecker',
+      toolbar: 'a11ycheck addcomment showcomments casechange checklist code export formatpainter image editimage pageembed permanentpen table tableofcontents',
+      toolbar_mode: 'floating',
+      tinycomments_mode: 'embedded',
+      tinycomments_author: 'Author name',
+    });
+
+
+
+        function ValidateEmpty() {
+            if (document.getElementById("ImageFile").value == "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Upload Image',
+                })
+                return false;
+            }
+            return true;
+        }
+    </script>
+    }

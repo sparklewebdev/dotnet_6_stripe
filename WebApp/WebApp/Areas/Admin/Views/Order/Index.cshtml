@@ -1,0 +1,60 @@
+﻿ @model WebApp_Models.ViewModels.ProductViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+    
+
+<div class="container p-4">
+    <div class="row">
+        <div class="col-6">
+           <h2 class="text-primary">List Of Orders</h2> 
+        </div>
+        <div class="col-6 ">
+            <a class="btn btn-dark" asp-controller="order" asp-action="Index" asp-route-status="pending">
+                Pending
+            </a>  
+            <a class="btn btn-primary" asp-controller="order" asp-action="Index" asp-route-status="approved">
+                Approved
+            </a>
+            <a class="btn btn-warning" asp-controller="order" asp-action="Index" asp-route-status="underprocess">
+                Under Process
+            </a>
+            <a class="btn btn-info" asp-controller="order" asp-action="Index" asp-route-status="shipped">
+                Shipped
+            </a>
+            <a class="btn btn-success" asp-controller="order" asp-action="Index" asp-route-status="all">
+                All
+            </a>
+        </div>
+    </div>
+</div>
+
+<table id="myTable" class="table table-bordered table-striped" style="Width:100%">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Phone Number
+            </th>
+            <th>
+                Order Status
+            </th>
+            <th>
+                Order Total
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+
+
+</table>
+
+
+@section scripts{
+    <script src="~/js/Order.js"></script>
+}
